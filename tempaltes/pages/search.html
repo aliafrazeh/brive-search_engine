@@ -1,0 +1,124 @@
+{%extends './base.html'%}
+{%load static%}
+
+
+{%block title%}
+      Brive search => {{searched}}
+{%endblock title%}
+{%block content%}
+<body style="background-color: #fff;">
+    <a style="float: right; margin-top: 12px;background: #e1ecff; color: #000; border-radius: 5px; padding: 16px; text-align: center; margin-right: 5px;
+
+    " href="{%url 'pages:home'%}" >
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+</svg></a>
+<style>
+        .form{
+        background-color:#fff;
+	    border: 1px solid #ddd;
+        border-radius: 24px;
+	    position: fixed;
+        margin: 0 auto;
+        width: 50%;
+        text-align: center;
+        padding: 10px;
+        box-shadow: 0 2px 5px 1px rgba(64,60,67,.16);
+        margin: 15px;
+
+    }
+    .searched{
+        width: 70%;
+        height: 20px;
+        border: none;
+        font-size: 17px;
+    }
+    .searched:focus{
+        outline: none;
+    }
+    .searched:hover{
+        cursor: auto !important;
+    }
+    .btn-search{
+        border: none;
+        font-size: 20px;
+        background: #fffab8;
+        color: #000000;
+        border-radius: 5px;
+        height: 20px;
+        width: 30px;
+        transition: 0.3s;
+        cursor: pointer;
+        min-height: 30px;
+        border-radius: 4px;
+    }
+    .btn-search:hover{
+        background: #ffffff;
+        color:#000000;
+        
+    }
+    .btn-search:focus{
+        background: #ffffff;
+        color:#000000;
+        transition: 0.1s;
+    }
+    .a-link{
+        color:#076479;
+        background: #fff;
+        font-size: 18px;
+
+    }
+    .a-link:focus{
+        color: #076479;
+        font-size: 18px;
+
+    }
+    .a-link:hover{
+        color: #076479;
+        background: #fffab8;
+        font-size: 18px;
+    }
+</style>
+{%if searched%}
+<form class="form" action="{%url 'pages:search'%}" method="get">
+    {%csrf_token%}
+    <input type="text" name="searched" value="{{searched}}" class="searched">
+    <button type="submit" class="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+    </button>
+</form>
+
+
+<hr>
+{%for article in article%}
+
+<div style="margin: 15px; margin-top: 100px;">
+    <p style="font-size: 12px; color: #000000;">{{article.url}}</p>
+<a href="{{article.url}}" style="text-decoration: none;" class="a-link">
+    
+    {{article.title}}</a>
+<br>
+<p>{{article.description}}</p>
+</div>
+{%empty%}
+<span style="margin:50px; margin-top:156px; position:absolute;">Not found</span>
+
+
+{%endfor%}
+
+{%else%}
+<form class="form" action="{%url 'pages:search'%}" method="get">
+    {%csrf_token%}
+    <input type="search" name="searched" placeholder="Search Brive" class="searched">
+    <button type="submit" class="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+    </button>
+</form>
+{%endif%}
+
+</body>
+{%endblock content%}
